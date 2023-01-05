@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Home</li>
+<li class="breadcrumb-item">Projects</li>
+<li class="breadcrumb-item active">Views</li>
+<li class="breadcrumb-item active">Tasks iews</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ companies.count }} Companies </strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for company in companies %}
+                <div class="col-12 col-md-6 col-lg-4">
+                <div class="card mx-2">
+                    <div class="card-body">
+                        <div>{{company.name }}</div>
+                        <div><a href="{% url 'register_app:company_update' company.id %}">Edit</a></div>
+                        <div><a href="{% url 'register_app:company_delete' company.id %}">delete</a></div>
+                        <small class="text-muted">{{ company.description|truncatechars:40 }}</small>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

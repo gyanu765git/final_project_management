@@ -4,6 +4,8 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from .forms import CompanyRegistrationForm
+from .models import Company
+
 
 def register_request(request):
 	if request.method == "POST":
@@ -64,3 +66,26 @@ def newCompany(request):
             'form' : form,
         }
         return render(request, 'new_company.html', context)
+
+def companyView(request):
+    companies = Company.objects.all()
+    context = {
+        'companies' : companies,
+    }
+    return render(request, 'company_view.html', context)        
+
+def companyUpdateView(request, id):
+    object = Company.objects.get(id=id)
+    if request.method == 'POST':
+        form = CompanyRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("register_app:company")
+    else:
+        form = CompanyRegistrationForm()
+    return render(request,"company_update.html",{'form': form})    
+	
+def companyDelete(request, id):
+  project_object = Company.objects.get(id=id)
+  project_object.delete()
+  return redirect("register_app:company")

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from project_management_app.forms import ProjectRegistrationForm,TaskRegistrationForm,ProjectTypeForm
 from .models import Project,Task
 # Create your views here.
@@ -15,7 +15,7 @@ def newProject(request):
                 'created': created,
                 'form': form,
             }
-            return render(request, 'new_project.html', context)
+            return redirect("project_management_app:projects")
         else:
             return render(request, 'new_project.html', context)
     else:
@@ -34,9 +34,22 @@ def projectsView(request):
     }
     return render(request, 'projects_view.html', context)
 
-# def ProjectViewById(request, id):
-#     project = Project.objects.get(id = id)     
-#     return render(request, "project_view_id.html",{"project":project})
+def projectUpdateView(request, id):
+    objects = Project.objects.get(id=id)
+    if request.method == 'POST':
+        form = ProjectRegistrationForm(request.POST, instance=objects)
+        if form.is_valid():
+            form.save()
+            return redirect("project_management_app:projects")
+    else:
+        form = ProjectRegistrationForm(instance=objects)
+
+    return render(request,"project_update.html",{'form': form})
+
+def projectDelete(request, id):
+  project_object = Project.objects.get(id=id)
+  project_object.delete()
+  return redirect("project_management_app:projects")
 
 def ProjectTypeView(request):
     if request.method == 'POST':
@@ -79,3 +92,27 @@ def newTask(request):
             'form': form,
         }
         return render(request,'new_task.html', context)
+
+def taskView(request):
+    tasks = Task.objects.all()
+    context = {
+        'tasks' : tasks,
+    }
+    return render(request, 'tasks_view.html', context)        
+
+def taskUpdateView(request, id):
+    objects = Task.objects.get(id=id)
+    if request.method == 'POST':
+        form = TaskRegistrationForm(request.POST, instance=objects)
+        if form.is_valid():
+            form.save()
+            return redirect("project_management_app:tasks")
+    else:
+        form = TaskRegistrationForm(instance=objects)
+
+    return render(request,"task_update.html",{'form': form})    
+
+def taskDelete(request, id):
+  project_object = Task.objects.get(id=id)
+  project_object.delete()
+  return redirect("project_management_app:tasks")

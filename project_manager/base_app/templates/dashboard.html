@@ -10,7 +10,9 @@
       <div class="card ext-dark bg-light">
         <div class="card-body pb-0">
           <h4 class="mb-0">{{ companies.count}}</h4>
+          <a href="{% url "register_app:company" %}">
           <p>Registered Companies</p>
+          </a>
         </div>
       </div>
     </div>
@@ -25,22 +27,26 @@
       </div>
     </div>
     <!--/.col-->
-
     <div class="col-sm-12 col-lg-6">
       <div class="card ext-dark bg-light">
         <div class="card-body pb-0">
           <h4 class="mb-0">{{ projects.count }}</h4>
+          <a href="{% url "project_management_app:projects" %}">
           <p>Projects</p>
+        </a>
         </div>
       </div>
     </div>
+  
     <!--/.col-->
 
     <div class="col-sm-12 col-lg-6">
       <div class="card text-dark bg-light">
         <div class="card-body pb-0">
           <h4 class="mb-0">{{ tasks.count }}</h4>
+          <a href="{% url "project_management_app:tasks" %}">
           <p>Tasks</p>
+        </a>
         </div>
       </div>
     </div>

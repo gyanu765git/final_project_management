@@ -8,4 +8,7 @@ urlpatterns = [
     path("login/", views.login_request, name="login"),
     path("logout", views.logout_request, name= "logout"),
     path('new-company/', views.newCompany, name='new-company'),
+    path('company/', views.companyView, name='company'),
+    path('company/update/<int:id>',views.companyUpdateView,name="company_update"),
+    path('company/delete/<int:id>/',views.companyDelete,name='company_delete'),
 ]

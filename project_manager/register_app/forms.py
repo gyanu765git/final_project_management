@@ -49,6 +49,7 @@ class CompanyRegistrationForm(forms.Form):
 
     class Meta:
         model = Comp
+        fields=['name','email','city','found_date']
 
 
     def save(self, commit=True):
@@ -71,4 +72,6 @@ class CompanyRegistrationForm(forms.Form):
         self.fields['city'].widget.attrs['class'] = 'form-control'
         self.fields['city'].widget.attrs['placeholder'] = 'City'
         self.fields['found_date'].widget.attrs['class'] = 'form-control'
-        self.fields['found_date'].widget.attrs['placeholder'] = 'Found date'        
+        self.fields['found_date'].widget.attrs['placeholder'] = 'Found date'
+
+   
