@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Home</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="container-fluid">
+  <div id="ui-view" style="opacity: 1;"><div class="animated fadeIn">
+    <div class="row">
+    <div class="col-12">
+      <div class="card">
+      <div class="card-body">
+        <div class="jumbotron bg-white">
+          <h1>Welcome to the Project Management System</h1>
+          <hr class="my-4">
+          <p>Register your company and start managing your projects</p>
+          <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'register_app:new-company' %}" role="button">Set up your company</a>
+          </p>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

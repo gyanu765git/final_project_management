@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <div class="card ext-dark bg-light">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{ companies.count}}</h4>
+          <p>Registered Companies</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card ext-dark bg-light">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{ users.count }}</h4>
+          <p>Registered Users</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card ext-dark bg-light">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{ projects.count }}</h4>
+          <p>Projects</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="card text-dark bg-light">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{ tasks.count }}</h4>
+          <p>Tasks</p>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+</div>
+
+{% endblock %}

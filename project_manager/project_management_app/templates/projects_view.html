@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Home</li>
+<li class="breadcrumb-item">Projects</li>
+<li class="breadcrumb-item active">Views</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ projects.count }} Active Projects</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-12 col-md-6 col-lg-4">
+                <div class="card mx-2">
+                    <div class="card-body">
+                        <div class="h4 m-0">
+                            {% if project.status == '1' %}
+                            <p class="text-right lead text-danger">Open</p>
+                            {% elif project.status == '2' %}
+                            <p class="text-right lead text-success">Completed</p>
+                            {% else %}
+                            <p class="text-right lead text-info">Cancelled</p>
+                            {% endif %}
+                        </div>
+                        <div>{{ project.name }}</div>
+                        <small class="text-muted">{{ project.description|truncatechars:40 }}</small>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
