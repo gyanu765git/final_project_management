@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div>{{company.name }}</div>
                         <div><a href="{% url 'register_app:company_update' company.id %}">Edit</a></div>
-                        <div><a href="{% url 'register_app:company_delete' company.id %}">delete</a></div>
+                        <div><a href="{% url 'register_app:company_delete' company.id %}" style='color:red;'>delete</a></div>
                         <small class="text-muted">{{ company.description|truncatechars:40 }}</small>
                     </div>
                 </div>

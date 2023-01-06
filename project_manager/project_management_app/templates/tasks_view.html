@@ -31,7 +31,7 @@
                         </div>
                         <div>{{task.task_name }}</div>
                         <div><a href="{% url 'project_management_app:task_update' task.id %}">Edit</a></div>
-                        <div><a href="{% url 'project_management_app:task_delete' task.id %}">delete</a></div>
+                        <div><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></div>
                         <small class="text-muted">{{ task.description|truncatechars:40 }}</small>
                     </div>
                 </div>
