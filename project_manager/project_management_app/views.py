@@ -36,6 +36,7 @@ def projectsView(request):
 
 def projectUpdateView(request, id):
     objects = Project.objects.get(id=id)
+    # tasks=Task.objects.filter(id=id)
     if request.method == 'POST':
         form = ProjectRegistrationForm(request.POST, instance=objects)
         if form.is_valid():
@@ -44,7 +45,7 @@ def projectUpdateView(request, id):
     else:
         form = ProjectRegistrationForm(instance=objects)
 
-    return render(request,"project_update.html",{'form': form})
+    return render(request,"project_update.html",{'form': form,"objects":objects})
 
 def projectDelete(request, id):
   project_object = Project.objects.get(id=id)
@@ -110,7 +111,7 @@ def taskUpdateView(request, id):
     else:
         form = TaskRegistrationForm(instance=objects)
 
-    return render(request,"task_update.html",{'form': form})    
+    return render(request,"task_update.html",{'form': form ,"objects":objects})    
 
 def taskDelete(request, id):
   project_object = Task.objects.get(id=id)

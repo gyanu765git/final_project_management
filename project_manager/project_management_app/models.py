@@ -23,6 +23,11 @@ type=(
     ('1', 'internal'),
     ('2', 'external'),
 )
+class ProjectType(models.Model):
+    type=models.CharField(max_length=100)
+    
+    def __str__(self):
+        return(self.type)
 
 class Project(models.Model):
     name = models.CharField(max_length=80)
@@ -38,11 +43,6 @@ class Project(models.Model):
     def __str__(self):
         return (self.name)
 
-class ProjectType(models.Model):
-    type=models.CharField(max_length=100)
-    
-    def __str__(self):
-        return(self.type)
 
 class Task(models.Model):
     task_name = models.CharField(max_length=80)

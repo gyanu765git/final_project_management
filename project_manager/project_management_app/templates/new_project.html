@@ -13,14 +13,22 @@
 {% load crispy_forms_tags %}
 
 <!--Login--> 
-<div class="container py-5">
+<div class="container-fluid py-5">
   <h1>create your project here</h1>
   <form method="POST">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
-    <button class="btn btn-primary" type="submit">create</button>
-  </form>
+    <div class="row">
+     {% csrf_token %}
+     {% for field in form %}
+     <div class="form-group col-4">
+      <label class="col-12">{{ field.label }}</label>
+      {{ field }}
+     </div>
+     {% endfor %} 
+    </div>
+      <button class="btn btn-primary" type="submit">create</button>
+    
+
+    </form>
 </div>
 
 {% endblock %}

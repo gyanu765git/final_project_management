@@ -11,4 +11,5 @@ urlpatterns = [
     path('company/', views.companyView, name='company'),
     path('company/update/<int:id>',views.companyUpdateView,name="company_update"),
     path('company/delete/<int:id>/',views.companyDelete,name='company_delete'),
+    
 ]

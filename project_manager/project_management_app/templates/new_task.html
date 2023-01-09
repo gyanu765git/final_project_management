@@ -16,10 +16,17 @@
 <div class="container py-5">
   <h1>create task here</h1>
   <form method="POST">
+    <div class="row">
     {% csrf_token %}
-    {{ form|crispy }}
-    <br/>
+    {% for field in form %}
+    <div class="form-group col-4">
+      <label class="col-12">{{ field.label }}</label>
+      {{ field }}
+  </div>
+  {% endfor %} 
+</div>
     <button class="btn btn-primary" type="submit">create</button>
+
   </form>
 </div>
 

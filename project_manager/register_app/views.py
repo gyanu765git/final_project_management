@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from .forms import CompanyRegistrationForm
 from .models import Company
+from .forms import ProfilePictureForm
 
 
 def register_request(request):
@@ -89,3 +90,22 @@ def companyDelete(request, id):
   project_object = Company.objects.get(id=id)
   project_object.delete()
   return redirect("register_app:company")
+
+
+def profile(request):
+    if request.method == 'POST':
+        img_form = ProfilePictureForm(request.POST, request.FILES)
+        print('PRINT 1: ', img_form)
+        context = {'img_form' : img_form }
+        if img_form.is_valid():
+            img_form.save(request)
+            updated = True
+            context = {'img_form' : img_form, 'updated' : updated }
+            return render(request, 'profile.html', context)
+        else:
+            return render(request, 'profile.html', context)
+    else:
+        img_form = ProfilePictureForm()
+        context = {'img_form' : img_form }
+        return render(request, 'profile.html', context)
+

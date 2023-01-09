@@ -30,8 +30,10 @@
                             {% endif %}
                         </div>
                         <div>{{ project.name }}</div>
-                        <div><a href="{% url 'project_management_app:project_update' project.id %}">Edit</a></div>
-                        <div><a href="{% url 'project_management_app:project_delete' project.id %}" style='color:red;'>delete</a></div>
+                        <div class="row">
+                        <div class="col-6"><a href="{% url 'project_management_app:project_update' project.id %}">view</a></div>
+                        <div class="col-6 text-center"><a href="{% url 'project_management_app:project_delete' project.id %}" style='color:red;'>delete</a></div>
+                        </div>
                         <small class="text-muted">{{ project.description|truncatechars:40 }}</small>
                     </div>
                 </div>
@@ -43,3 +45,15 @@
     </div>
 </div>
 {% endblock %}
+
+{%block javascript%}
+     
+<script>
+    function deleteFunction(e){
+        e.preventDefault();
+        swal("Are you sure you want to do this?", {
+            buttons: ["Oh noez!", "Aww yiss!"],
+          });
+    }
+</script>
+{%endblock%}

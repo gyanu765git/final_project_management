@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from register_app.models import Company as Comp
+from register_app.models import UserProfile
 
 # Create your forms here.
 
@@ -73,5 +74,31 @@ class CompanyRegistrationForm(forms.Form):
         self.fields['city'].widget.attrs['placeholder'] = 'City'
         self.fields['found_date'].widget.attrs['class'] = 'form-control'
         self.fields['found_date'].widget.attrs['placeholder'] = 'Found date'
+
+
+
+
+
+        
+
+class ProfilePictureForm(forms.Form):
+    img = forms.ImageField()
+    class Meta:
+        model = UserProfile
+        fields = ['img']
+
+    def save(self, request, commit=True):
+        user = request.user.userprofile_set.first()
+        user.img = self.cleaned_data['img']
+
+        if commit:
+            user.save()
+
+        return user
+
+    def __init__(self, *args, **kwargs):
+        super(ProfilePictureForm, self).__init__(*args, **kwargs)
+        self.fields['img'].widget.attrs['class'] = 'custom-file-input'
+        self.fields['img'].widget.attrs['id'] = 'validatedCustomFile'        
 
    
