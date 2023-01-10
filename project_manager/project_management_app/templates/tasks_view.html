@@ -23,6 +23,7 @@
                         <th>Type</th>
                         <th>Priority</th>
                         <th>Project</th>
+                        <th>Assigned to</th>
                         <th>Expected Start Date</th>
                         <th>Expected End Date</th>
                         <th>Description</th>
@@ -56,6 +57,7 @@
                         {% endif %}
                     </td>
                     <td>{{task.project}}</td>
+                    <td>{{task.assign}}</td>
                     <td>{{task.expected_start_date}}</td>
                     <td>{{task.expected_end_date}}</td>
                     <td>{{task.description}}</td>
