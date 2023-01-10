@@ -31,7 +31,8 @@ class ProjectType(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=80)
-    assign = models.ManyToManyField(User)
+    project_type = models.ForeignKey(ProjectType, on_delete=models.CASCADE)
+    assign = models.ForeignKey(User,on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
     is_active = models.CharField(max_length=17, choices=active_status, default=1)
     expected_start_date = models.DateField()
@@ -47,7 +48,7 @@ class Project(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=80)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assign = models.ManyToManyField(User)
+    assign = models.ForeignKey(User,on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
     type = models.CharField(max_length=15, choices=type)
     expected_start_date = models.DateField()
