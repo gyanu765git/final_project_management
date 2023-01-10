@@ -84,7 +84,7 @@ def newTask(request):
                 'created': created,
                 'form': form,
             }
-            return redirect("project_management_app:projects")
+            return redirect("project_management_app:project_update")
     else:
         form = TaskRegistrationForm()
         context = {
