@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 
 {% block breadcrumb %}
@@ -14,32 +14,58 @@
         <div class="card-header">
             <strong>{{ tasks.count }} Tasks </strong>
         </div>
-        <div class="card-body">
-            <div class="row">
+        <div class="container-fluid">
+            <table class="table table-striped table-sm" id="my_friends">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Priority</th>
+                        <th>Project</th>
+                        <th>Expected Start Date</th>
+                        <th>Expected End Date</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for task in tasks %}
-                <div class="col-12 col-md-6 col-lg-4">
-                <div class="card mx-2">
-                    <div class="card-body">
-                        <div class="h4 m-0">
-                            {% if task.status == '1' %}
-                            <p class="text-right lead text-danger">Open</p>
-                            {% elif task.status == '2' %}
-                            <p class="text-right lead text-success">Completed</p>
-                            {% else %}
-                            <p class="text-right lead text-info">Cancelled</p>
-                            {% endif %}
-                        </div>
-                        <div>{{task.task_name }}</div>
-                        <div><a href="{% url 'project_management_app:task_update' task.id %}">Edit</a></div>
-                        <div><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></div>
-                        <small class="text-muted">{{ task.description|truncatechars:40 }}</small>
-                    </div>
-                </div>
-                </div>
+                <tr>
+                    <td>{{task.task_name}}</td>
+                    <td>
+                        {% if task.status == '1' %}
+                        <p>Open</p>
+                        {% elif task.status == '2' %}
+                        <p>Completed</p>
+                        {% else %}
+                        <p>Cancelled</p>
+                        {% endif %}
+                    </td>
+                    <td>{% if task.status == '1' %}
+                        <p>internal</p>
+                        {% else %}
+                        <p>external</p>
+                        {% endif %}
+                    </td>
+                    <td>{% if task.status == '1' %}
+                        <p>medium</p>
+                        {% elif task.status == '2' %}
+                        <p>low</p>
+                        {% else %}
+                        <p>high</p>
+                        {% endif %}
+                    </td>
+                    <td>{{task.project}}</td>
+                    <td>{{task.expected_start_date}}</td>
+                    <td>{{task.expected_end_date}}</td>
+                    <td>{{task.description}}</td>
+                    <td><a href="{% url 'project_management_app:task_update' task.id %}">update</a></td>
+                    <td><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></td>
+                </tr>
                 {% endfor %}
-            </div>
-            <br>
-        </div>
+                </tbody>
+            </table>
+          </div>
     </div>
 </div>
 {% endblock %}
