@@ -112,6 +112,6 @@ def taskUpdateView(request, id):
     return render(request,"task_update.html",{'form': form ,"objects":objects})    
 
 def taskDelete(request, id):
-  project_object = Task.objects.get(id=id)
-  project_object.delete()
+  task_object = Task.objects.get(id=id)
+  task_object.delete()
   return redirect("project_management_app:tasks")
