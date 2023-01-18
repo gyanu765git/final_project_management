@@ -10,8 +10,13 @@
 {% block content %}
 <div class="col-md-12">
     <div class="card ">
-        <div class="card-header">
+        <div class="row card-header">
+            <div class='col-8'>
             <strong>{{ projects.count }} Active Projects</strong>
+            </div>
+            <div class="col-4 text-right ">
+            <a href="{% url 'project_management_app:new-project'%}" style="text-decoration: none;">New Project</a>
+            </div>
         </div>
         <div class="card-body mx-0 px-0">
             <div class="row">
