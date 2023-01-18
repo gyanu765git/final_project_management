@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import CompanyRegistrationForm
 from .models import Company
 from .forms import ProfilePictureForm
+from django.contrib.auth.models import User
 
 
 def register_request(request):
@@ -19,6 +20,18 @@ def register_request(request):
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = RegistrationForm()
 	return render (request=request, template_name="register.html", context={"register_form":form})
+
+def usersView(request):
+    users = User.objects.all()
+    context = {
+        'users' : users
+    }
+    return render(request, 'users_view.html', context)   
+
+def userDelete(request, id):
+  user_object = User.objects.get(id=id)
+  user_object.delete()
+  return redirect("register_app:users")
 
 
 def login_request(request):

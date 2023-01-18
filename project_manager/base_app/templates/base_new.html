@@ -22,13 +22,10 @@
 </head>
 
 {% block body %}
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<body class="app header-fixed">
 <!--starting header section-->>
   <header class="app-header navbar">
     <img src="{% static 'img/logos/title.png' %}" alt="" class="brand-gui ml-2 d-none d-sm-block p-2">
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
         {%if user.is_authenticated%}

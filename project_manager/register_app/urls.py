@@ -5,6 +5,8 @@ app_name = 'register_app'
 
 urlpatterns = [
     path("register/", views.register_request, name="register"),
+    path('users/', views.usersView, name='users'),
+    path('users/delete/<int:id>/',views.userDelete,name='user_delete'),
     path("login/", views.login_request, name="login"),
     path("logout", views.logout_request, name= "logout"),
     path('new-company/', views.newCompany, name='new-company'),

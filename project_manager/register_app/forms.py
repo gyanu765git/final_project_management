@@ -12,16 +12,17 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = [
+            'username',
             'first_name',
             'last_name',
-            'username',
             'email',
+            'password1',
+            'password2',
         ]
 
         labels = {
             'first_name': 'Frist Name',
             'last_name': 'Last Name',
-            'company': 'Company',
         }
 
     def save(self, commit=True):
@@ -30,6 +31,7 @@ class RegistrationForm(UserCreationForm):
         user.last_name = self.cleaned_data['last_name']
         user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
+        
 
         if commit:
             user.save()
