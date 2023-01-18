@@ -71,7 +71,7 @@ def newCompany(request):
                 'created' : created,
                 'form' : form,
                        }
-            return render(request, 'new_company.html', context)
+            return redirect("register_app:company")
         else:
             return render(request, 'new_company.html', context)
     else:
@@ -88,16 +88,27 @@ def companyView(request):
     }
     return render(request, 'company_view.html', context)        
 
+# def companyUpdateView(request,id):
+#     object = Company.objects.get(id=id)
+#     if request.method == 'POST':
+#         form = CompanyRegistrationForm(request.POST, instance=object)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("register_app:company")
+#     else:
+#         form = CompanyRegistrationForm(instance=object)
+#     return render(request,"company_update.html",{'form': form,"object":object,})  
+
 def companyUpdateView(request, id):
-    object = Company.objects.get(id=id)
+    objects = Company.objects.get(id=id)
     if request.method == 'POST':
-        form = CompanyRegistrationForm(request.POST)
+        form = CompanyRegistrationForm(request.POST, instance=objects)
         if form.is_valid():
             form.save()
             return redirect("register_app:company")
     else:
-        form = CompanyRegistrationForm()
-    return render(request,"company_update.html",{'form': form})    
+        form = CompanyRegistrationForm(instance=objects)
+    return render(request,"company_update.html",{'form': form,"objects":objects})      
 	
 def companyDelete(request, id):
   project_object = Company.objects.get(id=id)

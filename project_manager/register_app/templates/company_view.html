@@ -1,3 +1,52 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Home</li>
+<li class="breadcrumb-item active">Views</li>
+<li class="breadcrumb-item active">company Views</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ companies.count }} Registered Companies </strong>
+        </div>
+        <div class="container-fluid">
+            <table class="table table-striped table-sm" id="my_friends">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>Found Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies %}
+                <tr>
+                    <td>{{company.name}}</td>
+                    <td>{{company.email}}</td>
+                    <td>{{company.city}}</td>
+                    <td>{{company.found_date}}<td>
+                    <td><a href="{% url 'register_app:company_update' company.id %}">Update</a></td>
+                    <td><a href="{% url 'register_app:company_delete' company.id %}" style='color:red;'>delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+          </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+{% comment %} 
 {% extends 'base.html' %}
 {% load static %}
 
@@ -33,4 +82,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}

@@ -44,7 +44,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['password1'].help_text = None
         self.fields['password2'].help_text = None
 
-class CompanyRegistrationForm(forms.Form):
+class CompanyRegistrationForm(forms.ModelForm):
     name = forms.CharField(max_length=80)
     email = forms.EmailField()
     city = forms.CharField(max_length=50)
