@@ -23,7 +23,7 @@
                 {% for project in projects %}
                 <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mx-2">
-                    <a href="{% url 'project_management_app:project_update' project.id %}" style="text-decoration: none;">
+                    <a href="{% url 'project_management_app:project_update' project.id %}" style="text-decoration:none;">
                     <div class="card-body">
                         <div class="h4 m-0">
                             {% if project.status == '1' %}
@@ -36,7 +36,7 @@
                         </div>
                         <h5>{{ project.name }}</h4>
                         {% comment %} <div class="col-6 text-center"><a href="{% url 'project_management_app:project_delete' project.id %}" style='color:red;'>delete</a></div> {% endcomment %}
-                        <small class="text-muted">{{ project.description|truncatechars:40 }}</small>
+                        <small class="text-muted">{{ project.description|truncatechars:50 }}</small>
                         </a>
                     </div>
                 </div>

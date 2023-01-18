@@ -11,7 +11,7 @@
 <div class="container-fluid">
   <div id="ui-view" style="opacity: 1;">
       <div class="animated fadeIn">
-          <div class="row bg-white py-0" >
+          <div class="row bg-white" >
               <div class="col-12">
                   <div class="card">
                       <div class="card-body text-center">
@@ -19,15 +19,15 @@
                             <h1>Welcome to the Project Management System</h1>
                               <hr class="my-4">
                               <div class="row">
-                                  <div class="col-6">
-                                    <img src="{% static 'img/officeimage.jpg' %}" style="height:220px">
-                                  </div>
                                   <div class="col-sm-12 col-lg-6 text-center my-5"> 
                                     <p>Register your company and start managing your projects</p>
                                     <p class="lead">
                                       <a class="btn btn-primary btn-lg" href="{% url 'register_app:new-company' %}" role="button">Register your company</a>
                                     </p>
-                                  </div>    
+                                  </div>  
+                                  <div class="col-6">
+                                    <img src="{% static 'img/indeximage.png' %}" style="height:220px">
+                                  </div>  
                               </div>
                           </div>
                       </div>
