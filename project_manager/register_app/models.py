@@ -14,9 +14,18 @@ class Company(models.Model):
         verbose_name_plural = 'Companies'
         ordering = ('name',)
 
-
     def __str__(self):
         return (self.name)
+
+class NormalUser(models.Model):
+    first_name=models.CharField(max_length=20)
+    last_name=models.CharField(max_length=20)
+    username=models.CharField(max_length=20)
+    email=models.EmailField(max_length=25)
+
+    def __str__(self):
+        return self.username
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)

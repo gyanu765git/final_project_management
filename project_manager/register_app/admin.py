@@ -1,5 +1,5 @@
 from django.contrib import admin
-from register_app.models import Company,UserProfile
+from register_app.models import Company,UserProfile,NormalUser
 # Register your models here.
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Company, CompanyAdmin)    
+admin.site.register(NormalUser)

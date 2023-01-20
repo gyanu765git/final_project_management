@@ -1,9 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_new_index.html' %}
 {% load static %} 
 
-{% block breadcrumb %}
-<li class="breadcrumb-item active">Home</li>
-{% endblock breadcrumb%}
 
 {% block content %}
 
@@ -20,9 +17,9 @@
                               <hr class="my-4">
                               <div class="row">
                                   <div class="col-sm-12 col-lg-6 text-center my-5"> 
-                                    <p>start managing your projects</p>
+                                    <p>Register your company and start managing your projects</p>
                                     <p class="lead">
-                                      <a class="btn btn-primary btn-lg" href="{% url 'project_management_app:new-project' %}" role="button">Create your project</a>
+                                      <a class="btn btn-primary btn-lg" href="{% url 'register_app:new-company' %}" role="button">Register your company</a>
                                     </p>
                                   </div>  
                                   <div class="col-6">

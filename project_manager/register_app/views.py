@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from .forms import CompanyRegistrationForm
 from .models import Company
-from .forms import ProfilePictureForm
+from .forms import ProfilePictureForm,NormalUserForm
 from django.contrib.auth.models import User
 
 
@@ -16,7 +16,7 @@ def register_request(request):
 			user = form.save()
 			login(request, user)
 			messages.success(request, "Registration successful.")
-			return redirect("register_app:login")
+			return redirect("base_app:companyindex")
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = RegistrationForm()
 	return render (request=request, template_name="register.html", context={"register_form":form})
@@ -73,7 +73,7 @@ def newCompany(request):
                 'created' : created,
                 'form' : form,
                        }
-            return redirect("register_app:company")
+            return redirect("base_app:index")
         else:
             return render(request, 'new_company.html', context)
     else:
@@ -85,24 +85,23 @@ def newCompany(request):
 
 def companyView(request):
     if request.user.is_superuser:
-       companies = Company.objects.all()
+        companies = Company.objects.all()
     else:
         companies=Company.objects.filter(user=request.user)   
     context = {
         'companies' : companies,
     }
-    return render(request, 'company_view.html', context)        
+    return render(request, 'company_view.html', context)   
+      
 
-# def companyUpdateView(request,id):
-#     object = Company.objects.get(id=id)
-#     if request.method == 'POST':
-#         form = CompanyRegistrationForm(request.POST, instance=object)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("register_app:company")
-#     else:
-#         form = CompanyRegistrationForm(instance=object)
-#     return render(request,"company_update.html",{'form': form,"object":object,})  
+def createNewUser(request):
+	if request.method == "POST":
+		form = NormalUserForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect("base_app:companyindex")
+	form = NormalUserForm()
+	return render (request=request, template_name="new_user.html", context={"form":form})
 
 def companyUpdateView(request, id):
     objects = Company.objects.get(id=id)
@@ -138,3 +137,5 @@ def profile(request):
         context = {'img_form' : img_form }
         return render(request, 'profile.html', context)
 
+def renderprofile(request):
+    return render(request,"profile.html")

@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
-from register_app.models import Company as Comp
-from register_app.models import UserProfile
+from register_app.models import Company 
+from register_app.models import UserProfile,NormalUser
 
 # Create your forms here.
 
@@ -32,10 +32,8 @@ class RegistrationForm(UserCreationForm):
         user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
         
-
         if commit:
             user.save()
-
         return user
 
     def __init__(self, *args, **kwargs):
@@ -44,6 +42,43 @@ class RegistrationForm(UserCreationForm):
         self.fields['password1'].help_text = None
         self.fields['password2'].help_text = None
 
+class NormalUserForm(forms.ModelForm):
+    class Meta:
+        model = NormalUser
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ]
+
+        labels = {
+            'first_name': 'Frist Name',
+            'last_name': 'Last Name',
+        }
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.username = self.cleaned_data['username']
+        user.email = self.cleaned_data['email']
+        
+        if commit:
+            user.save()
+        return user
+
+    
+    def __init__(self, *args, **kwargs):
+        super(NormalUserForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['class'] = 'form-control'
+        self.fields['last_name'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+   
+
+
+
 class CompanyRegistrationForm(forms.ModelForm):
     name = forms.CharField(max_length=80)
     email = forms.EmailField()
@@ -51,19 +86,21 @@ class CompanyRegistrationForm(forms.ModelForm):
     found_date = forms.DateField()
 
     class Meta:
-        model = Comp
+        model = Company
         fields=['name','email','city','found_date']
 
 
     def save(self, commit=True):
-        company = Comp()
+        company = super(CompanyRegistrationForm, self).save(commit=False)
         company.name = self.cleaned_data['name']
         company.email = self.cleaned_data['email']
         company.city = self.cleaned_data['city']
         company.found_date = self.cleaned_data['found_date']
+        company.save()
 
         if commit:
             company.save()
+        return company    
 
 
     def __init__(self, *args, **kwargs):
@@ -76,12 +113,7 @@ class CompanyRegistrationForm(forms.ModelForm):
         self.fields['city'].widget.attrs['placeholder'] = 'City'
         self.fields['found_date'].widget.attrs['class'] = 'form-control'
         self.fields['found_date'].widget.attrs['placeholder'] = 'Found date'
-
-
-
-
-
-        
+       
 
 class ProfilePictureForm(forms.Form):
     img = forms.ImageField()

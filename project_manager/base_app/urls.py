@@ -10,5 +10,6 @@ app_name = 'base_app'
 urlpatterns = [
     path("",views.renderHome,name="home"), 
     path("index/",views.renderIndex,name="index"), 
+    path("companyindex/",views.renderIndex2,name="companyindex"), 
     path('dashboard/', views.dashboard, name='dashboard'),
 ] 

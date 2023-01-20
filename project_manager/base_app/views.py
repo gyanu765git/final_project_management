@@ -10,6 +10,9 @@ def renderHome(request):
 def renderIndex(request):
     return render(request,"index.html")
 
+def renderIndex2(request):
+    return render(request,"index2.html")
+
 def dashboard(request):
     users = User.objects.all()
     companies = Company.objects.all()
