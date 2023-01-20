@@ -32,8 +32,8 @@ class ProjectRegistrationForm(forms.ModelForm):
     assign = forms.ModelChoiceField(queryset=User.objects.all())
     status = forms.ChoiceField(choices=status)
     is_active = forms.ChoiceField(choices=active_status)
-    # expected_start_date=forms.DateField()
-    # expected_end_date=forms.DateField()
+    expected_start_date=forms.DateField()
+    expected_end_date=forms.DateField()
     priority=forms.ChoiceField(choices=priority_status)
     description = forms.CharField(widget=forms.Textarea)
     class Meta:
@@ -43,6 +43,8 @@ class ProjectRegistrationForm(forms.ModelForm):
                   "assign",
                   "status",
                   "is_active",
+                  "expected_start_date",
+                  "expected_end_date",
                   "priority",
                   "description",
                   ]
@@ -54,8 +56,8 @@ class ProjectRegistrationForm(forms.ModelForm):
         Project.project_type=self.cleaned_data["project_type"]
         Project.status = self.cleaned_data['status']
         Project.is_active = self.cleaned_data['is_active']
-        # Project.expected_start_date = self.cleaned_data['expected_start_date']
-        # Project.expected_end_date = self.cleaned_data['expected_end_date']
+        Project.expected_start_date = self.cleaned_data['expected_start_date']
+        Project.expected_end_date = self.cleaned_data['expected_end_date']
         Project.priority = self.cleaned_data['priority']
         Project.description = self.cleaned_data['description']
         Project.save()
@@ -74,8 +76,8 @@ class ProjectRegistrationForm(forms.ModelForm):
         self.fields['assign'].widget.attrs['class'] = 'form-control' 
         self.fields['status'].widget.attrs['class'] = 'form-control'
         self.fields['is_active'].widget.attrs['class'] = 'form-control'
-        # self.fields['expected_start_date'].widget.attrs['class'] = 'form-control'
-        # self.fields['expected_end_date'].widget.attrs['class'] = 'form-control'
+        self.fields['expected_start_date'].widget.attrs['class'] = 'form-control'
+        self.fields['expected_end_date'].widget.attrs['class'] = 'form-control'
         self.fields['priority'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'project description...'
@@ -116,7 +118,16 @@ class TaskRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ["task_name",
+                  "project",
+                  "assign",
+                  "status",
+                  "type",
+                  "expected_start_date",
+                  "expected_end_date",
+                  "priority",
+                  "description",
+                  ]
 
    
     def save(self, commit=True):

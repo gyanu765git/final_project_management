@@ -8,9 +8,9 @@ def newProject(request):
         form = ProjectRegistrationForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            fs= form.save(commit=False)
-            fs.created_by= request.user
-            fs.save()
+            obj= form.save(commit=False)
+            obj.user= request.user
+            obj.save()
             created = True
             form = ProjectRegistrationForm()
             context = {
@@ -31,7 +31,7 @@ def projectsView(request):
     if request.user.is_superuser:
         projects=Project.objects.all()
     else:    
-        projects = Project.objects.filter(created_by=request.user)
+        projects = Project.objects.filter(user=request.user)
     context = {
         'projects' : projects,
     }
@@ -60,7 +60,9 @@ def ProjectTypeView(request):
         form = ProjectTypeForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            form.save()
+            obj=form.save(commit=False)
+            obj.user=request.user
+            obj.save()
             created = True
             context = {
                 'created': created,
@@ -81,7 +83,9 @@ def newTask(request):
         form = TaskRegistrationForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            form.save()
+            obj= form.save(commit=False)
+            obj.user= request.user
+            obj.save()
             created = True
             context = {
                 'created': created,
@@ -96,7 +100,10 @@ def newTask(request):
         return render(request,'new_task.html', context)
 
 def taskView(request):
-    tasks = Task.objects.all()
+    if request.user.is_superuser:
+       tasks = Task.objects.all()
+    else:
+        tasks=Task.objects.filter(user=request.user)   
     context = {
         'tasks' : tasks,
     }

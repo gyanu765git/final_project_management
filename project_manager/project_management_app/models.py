@@ -7,12 +7,10 @@ status = (
     ('2', 'Completed'),
     ('3', 'Cancelled'),
 )
-
 active_status = (
     ('1', 'Yes'),
     ('2', 'No'),
 )
-
 priority_status = (
     ('1', 'Medium'),
     ('2', 'Low'),
@@ -25,6 +23,7 @@ type=(
 )
 class ProjectType(models.Model):
     type=models.CharField(max_length=100)
+    user = models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     
     def __str__(self):
         return(self.type)
@@ -35,12 +34,11 @@ class Project(models.Model):
     assign=models.CharField(max_length=100)
     status = models.CharField(max_length=15, choices=status, default=1)
     is_active = models.CharField(max_length=17, choices=active_status, default=1)
-    # expected_start_date = models.DateField()
-    # expected_end_date=models.DateField()
+    expected_start_date = models.DateField()
+    expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
-    created_by = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return (self.name)
@@ -49,13 +47,15 @@ class Project(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=80)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assign = models.ForeignKey(User,on_delete=models.CASCADE)
+    assign = models.CharField(max_length=100)
     status = models.CharField(max_length=15, choices=status, default=1)
     type = models.CharField(max_length=15, choices=type)
     expected_start_date = models.DateField()
     expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
+    user = models.ForeignKey(User,null=True, on_delete=models.CASCADE)
+    
 
     class Meta:
         ordering = ['project', 'task_name']

@@ -64,7 +64,9 @@ def newCompany(request):
         form = CompanyRegistrationForm(request.POST)
         context = {'form':form}
         if form.is_valid():
-            form.save()
+            obj= form.save(commit=False)
+            obj.user= request.user
+            obj.save()
             created = True
             form = CompanyRegistrationForm()
             context = {
@@ -82,7 +84,10 @@ def newCompany(request):
         return render(request, 'new_company.html', context)
 
 def companyView(request):
-    companies = Company.objects.all()
+    if request.user.is_superuser:
+       companies = Company.objects.all()
+    else:
+        companies=Company.objects.filter(user=request.user)   
     context = {
         'companies' : companies,
     }
