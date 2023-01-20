@@ -8,7 +8,9 @@ def newProject(request):
         form = ProjectRegistrationForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            form.save()
+            fs= form.save(commit=False)
+            fs.created_by= request.user
+            fs.save()
             created = True
             form = ProjectRegistrationForm()
             context = {
@@ -26,11 +28,12 @@ def newProject(request):
         return render(request,'new_project.html', context)
 
 def projectsView(request):
-    projects = Project.objects.all()
-    tasks = Task.objects.all()
+    if request.user.is_superuser:
+        projects=Project.objects.all()
+    else:    
+        projects = Project.objects.filter(created_by=request.user)
     context = {
         'projects' : projects,
-        'tasks' : tasks,
     }
     return render(request, 'projects_view.html', context)
 
