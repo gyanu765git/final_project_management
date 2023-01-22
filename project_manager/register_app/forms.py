@@ -36,11 +36,12 @@ class RegistrationForm(UserCreationForm):
             user.save()
         return user
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,*args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
         self.fields['password1'].help_text = None
         self.fields['password2'].help_text = None
+      
 
 class NormalUserForm(forms.ModelForm):
     class Meta:
@@ -106,13 +107,9 @@ class CompanyRegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CompanyRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
-        self.fields['name'].widget.attrs['placeholder'] = 'Company Name'
         self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['placeholder'] = 'Email'
         self.fields['city'].widget.attrs['class'] = 'form-control'
-        self.fields['city'].widget.attrs['placeholder'] = 'City'
         self.fields['found_date'].widget.attrs['class'] = 'form-control'
-        self.fields['found_date'].widget.attrs['placeholder'] = 'Found date'
        
 
 class ProfilePictureForm(forms.Form):

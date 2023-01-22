@@ -2,6 +2,7 @@ from django import forms
 from .models import Project,Task,ProjectType
 from django.contrib.auth.models import User
 
+
 status = (
     ('1', 'Open'),
     ('2', 'Completed'),
@@ -27,20 +28,19 @@ type=(
 
 
 class ProjectRegistrationForm(forms.ModelForm):
-    name = forms.CharField(max_length=80)
-    project_type = forms.ModelChoiceField(queryset=ProjectType.objects.all())
-    assign = forms.ModelChoiceField(queryset=User.objects.all())
-    status = forms.ChoiceField(choices=status)
-    is_active = forms.ChoiceField(choices=active_status)
-    expected_start_date=forms.DateField()
-    expected_end_date=forms.DateField()
-    priority=forms.ChoiceField(choices=priority_status)
-    description = forms.CharField(widget=forms.Textarea)
+    # name = forms.CharField(max_length=80)
+    # project_type = forms.ModelChoiceField(queryset=ProjectType.objects.all())
+    # # project_type = forms.ModelChoiceField(queryset=ProjectType.objects.values_list('type', flat=True).distinct())
+    # status = forms.ChoiceField(choices=status)
+    # is_active = forms.ChoiceField(choices=active_status)
+    # expected_start_date=forms.DateField()
+    # expected_end_date=forms.DateField()
+    # priority=forms.ChoiceField(choices=priority_status)
+    # description = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Project
         fields = ["name",
                   "project_type",
-                  "assign",
                   "status",
                   "is_active",
                   "expected_start_date",
@@ -64,16 +64,14 @@ class ProjectRegistrationForm(forms.ModelForm):
         
         if commit:
             Project.save()
-
         return Project
 
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,user,*args, **kwargs):
         super(ProjectRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['name'].widget.attrs['placeholder'] = 'Project Name'  
         self.fields["project_type"].widget.attrs['class']='form-control'
-        self.fields['assign'].widget.attrs['class'] = 'form-control' 
         self.fields['status'].widget.attrs['class'] = 'form-control'
         self.fields['is_active'].widget.attrs['class'] = 'form-control'
         self.fields['expected_start_date'].widget.attrs['class'] = 'form-control'
@@ -81,10 +79,12 @@ class ProjectRegistrationForm(forms.ModelForm):
         self.fields['priority'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'project description...'
+        self.fields["project_type"].queryset = ProjectType.objects.filter(user=user)
 
+   
 
 class ProjectTypeForm(forms.ModelForm):
-    type=forms.CharField(max_length=100)
+    # type=forms.CharField(max_length=100)
     class Meta:
         model = ProjectType
         fields = ["type"]
@@ -105,16 +105,15 @@ class ProjectTypeForm(forms.ModelForm):
         self.fields['type'].widget.attrs['placeholder'] = 'project type'
 
 class TaskRegistrationForm(forms.ModelForm):
-    task_name = forms.CharField(max_length=80)
-    project = forms.ModelChoiceField(queryset=Project.objects.all())
-    assign = forms.ModelChoiceField(queryset=User.objects.all())
-    status = forms.ChoiceField(choices=status)
-    type=forms.ChoiceField(choices=type)
-    expected_start_date=forms.DateField()
-    expected_end_date=forms.DateField()
-    priority=forms.ChoiceField(choices=priority_status)
-    description = forms.CharField(widget=forms.Textarea)
-
+    # task_name = forms.CharField(max_length=80)
+    # project = forms.ModelChoiceField(queryset=Project.objects.all())
+    # assign = forms.ModelChoiceField(queryset=User.objects.all())
+    # status = forms.ChoiceField(choices=status)
+    # type=forms.ChoiceField(choices=type)
+    # expected_start_date=forms.DateField()
+    # expected_end_date=forms.DateField()
+    # priority=forms.ChoiceField(choices=priority_status)
+    # description = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Task
@@ -148,27 +147,22 @@ class TaskRegistrationForm(forms.ModelForm):
         return task
 
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,user, *args, **kwargs):
         super(TaskRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['task_name'].widget.attrs['class'] = 'form-control'
         self.fields['task_name'].widget.attrs['placeholder'] = 'task name'
-
         self.fields['project'].widget.attrs['class'] = 'form-control'
         self.fields['project'].widget.attrs['placeholder'] = 'select project'
-        
         self.fields['assign'].widget.attrs['class'] = 'form-control'
-
         self.fields['status'].widget.attrs['class'] = 'form-control'
-    
         self.fields['type'].widget.attrs['class'] = 'form-control'
-
         self.fields['expected_start_date'].widget.attrs['class'] = 'form-control'
-
         self.fields['expected_end_date'].widget.attrs['class'] = 'form-control'
-
         self.fields['priority'].widget.attrs['class'] = 'form-control'
-
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'task description..'
+        self.fields["project"].queryset = Project.objects.filter(user=user)
+        # self.fields["assign"].queryset=User.objects.filter(user=request.user)
 
-        self.fields['assign'].widget.attrs['placeholder'] = 'Found date'
+    
+        

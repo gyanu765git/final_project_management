@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from project_management_app.models import Project
-# Create your models here.
+
 
 class Company(models.Model):
     name = models.CharField(max_length=80)
@@ -30,7 +29,7 @@ class NormalUser(models.Model):
 class UserProfile(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    project = models.ManyToManyField(Project, blank=True)
+    # project = models.ManyToManyField(Project, blank=True)
     img    = models.ImageField(upload_to='base_app/static/img/avatar', blank=True, default='base_app/static/img/avatar/blank_profile.png')
 
     def __str__(self):

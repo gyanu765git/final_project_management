@@ -17,7 +17,7 @@ priority_status = (
     ('3', 'High'),
 )
 
-type=(
+task_type=(
     ('1', 'internal'),
     ('2', 'external'),
 )
@@ -31,7 +31,6 @@ class ProjectType(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=80)
     project_type = models.ForeignKey(ProjectType, on_delete=models.CASCADE)
-    assign=models.CharField(max_length=100)
     status = models.CharField(max_length=15, choices=status, default=1)
     is_active = models.CharField(max_length=17, choices=active_status, default=1)
     expected_start_date = models.DateField()
@@ -47,14 +46,13 @@ class Project(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=80)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assign = models.CharField(max_length=100)
+    assign = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
-    type = models.CharField(max_length=15, choices=type)
+    type = models.CharField(max_length=15, choices=task_type,default=1)
     expected_start_date = models.DateField()
     expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
-    user = models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     
 
     class Meta:

@@ -1,18 +1,18 @@
 from django.shortcuts import render,redirect
 from project_management_app.forms import ProjectRegistrationForm,TaskRegistrationForm,ProjectTypeForm
 from .models import Project,Task
+from django.contrib.auth.models import User
 # Create your views here.
 
 def newProject(request):
     if request.method == 'POST':
-        form = ProjectRegistrationForm(request.POST)
+        form = ProjectRegistrationForm(request.user,request.POST)
         context = {'form': form}
         if form.is_valid():
-            obj= form.save(commit=False)
-            obj.user= request.user
+            obj=form.save(commit=False)
+            obj.user=request.user
             obj.save()
             created = True
-            form = ProjectRegistrationForm()
             context = {
                 'created': created,
                 'form': form,
@@ -21,7 +21,7 @@ def newProject(request):
         else:
             return render(request, 'new_project.html', context)
     else:
-        form = ProjectRegistrationForm()
+        form = ProjectRegistrationForm(request.user)
         context = {
             'form': form,
         }
@@ -41,13 +41,12 @@ def projectUpdateView(request, id):
     objects = Project.objects.get(id=id)
     tasks=Task.objects.filter(project_id=id)
     if request.method == 'POST':
-        form = ProjectRegistrationForm(request.POST, instance=objects)
+        form = ProjectRegistrationForm(request.user,request.POST, instance=objects)
         if form.is_valid():
             form.save()
             return redirect("project_management_app:projects")
     else:
-        form = ProjectRegistrationForm(instance=objects)
-
+        form = ProjectRegistrationForm(request.user,instance=objects)
     return render(request,"project_update.html",{'form': form,"objects":objects,"tasks":tasks})
 
 def projectDelete(request, id):
@@ -80,12 +79,10 @@ def ProjectTypeView(request):
 
 def newTask(request):
     if request.method == 'POST':
-        form = TaskRegistrationForm(request.POST)
+        form = TaskRegistrationForm(request.user,request.POST)
         context = {'form': form}
         if form.is_valid():
-            obj= form.save(commit=False)
-            obj.user= request.user
-            obj.save()
+            form.save()
             created = True
             context = {
                 'created': created,
@@ -93,17 +90,14 @@ def newTask(request):
             }
             return redirect("project_management_app:tasks")
     else:
-        form = TaskRegistrationForm()
+        form = TaskRegistrationForm(request.user)
         context = {
             'form': form,
         }
         return render(request,'new_task.html', context)
 
 def taskView(request):
-    if request.user.is_superuser:
-       tasks = Task.objects.all()
-    else:
-        tasks=Task.objects.filter(user=request.user)   
+    tasks = Task.objects.all()  
     context = {
         'tasks' : tasks,
     }
@@ -112,12 +106,12 @@ def taskView(request):
 def taskUpdateView(request, id):
     objects = Task.objects.get(id=id)
     if request.method == 'POST':
-        form = TaskRegistrationForm(request.POST, instance=objects)
+        form = TaskRegistrationForm(request.user,request.POST, instance=objects)
         if form.is_valid():
             form.save()
             return redirect("project_management_app:tasks")
     else:
-        form = TaskRegistrationForm(instance=objects)
+        form = TaskRegistrationForm(request.user,instance=objects)
 
     return render(request,"task_update.html",{'form': form ,"objects":objects})    
 

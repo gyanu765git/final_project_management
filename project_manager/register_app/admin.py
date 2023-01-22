@@ -1,6 +1,7 @@
 from django.contrib import admin
 from register_app.models import Company,UserProfile,NormalUser
 # Register your models here.
+admin.site.register(NormalUser)
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['name','email','city','found_date']
@@ -11,4 +12,3 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Company, CompanyAdmin)    
-admin.site.register(NormalUser)
