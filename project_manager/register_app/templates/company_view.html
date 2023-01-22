@@ -11,11 +11,8 @@
 <div class="col-md-12">
     <div class="card">
         <div class="row card-header" style="background-color:white;">
-            <div class='col-8'>
-            <strong>{{ companies.count }} Registered Companies</strong>
-            </div>
-            <div class="col-4 text-right">
-            <a class="btn btn-primary py-0" href="{% url 'register_app:new-company'%}" style="text-decoration:none;border-radius:15px;">register new company</a>
+            <div class='col-12'>
+            <strong> Registered Company</strong>
             </div>
         </div>
         <div class="container-fluid">
@@ -36,7 +33,7 @@
                     <td>{{company.city}}</td>
                     <td>{{company.found_date}}<td>
                     <td><a href="{% url 'register_app:company_update' company.id %}">Update</a></td>
-                    <td><a href="{% url 'register_app:company_delete' company.id %}" style='color:red;'>delete</a></td>
+                    {% comment %} <td><a href="{% url 'register_app:company_delete' company.id %}" style='color:red;'>delete</a></td> {% endcomment %}
                 </tr>
                 {% endfor %}
                 </tbody>

@@ -1,30 +1,31 @@
 from django import forms
 from .models import Project,Task,ProjectType
 from django.contrib.auth.models import User
+from register_app.models import NormalUser
 
 
-status = (
-    ('1', 'Open'),
-    ('2', 'Completed'),
-    ('3', 'Cancelled'),
-)
+# status = (
+#     ('1', 'Open'),
+#     ('2', 'Completed'),
+#     ('3', 'Cancelled'),
+# )
 
-active_status = (
-    ('1', 'Yes'),
-    ('2', 'No'),
-)
+# active_status = (
+#     ('1', 'Yes'),
+#     ('2', 'No'),
+# )
 
-priority_status = (
+# priority_status = (
     
-    ('1', 'Medium'),
-    ('2', 'Low'),
-    ('3', 'High'),
-)
+#     ('1', 'Medium'),
+#     ('2', 'Low'),
+#     ('3', 'High'),
+# )
 
-type=(
-    ('1', 'internal'),
-    ('2', 'external'),
-)
+# type=(
+#     ('1', 'internal'),
+#     ('2', 'external'),
+# )
 
 
 class ProjectRegistrationForm(forms.ModelForm):
@@ -107,7 +108,7 @@ class ProjectTypeForm(forms.ModelForm):
 class TaskRegistrationForm(forms.ModelForm):
     # task_name = forms.CharField(max_length=80)
     # project = forms.ModelChoiceField(queryset=Project.objects.all())
-    # assign = forms.ModelChoiceField(queryset=User.objects.all())
+    # assign = forms.ModelChoiceField(queryset=NormalUser.objects.all())
     # status = forms.ChoiceField(choices=status)
     # type=forms.ChoiceField(choices=type)
     # expected_start_date=forms.DateField()
@@ -162,7 +163,7 @@ class TaskRegistrationForm(forms.ModelForm):
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'task description..'
         self.fields["project"].queryset = Project.objects.filter(user=user)
-        # self.fields["assign"].queryset=User.objects.filter(user=request.user)
+        self.fields["assign"].queryset=NormalUser.objects.filter(user=user)
 
     
         

@@ -7,6 +7,7 @@ from .forms import CompanyRegistrationForm
 from .models import Company
 from .forms import ProfilePictureForm,NormalUserForm
 from django.contrib.auth.models import User
+from register_app.models import NormalUser
 
 
 def register_request(request):
@@ -22,14 +23,17 @@ def register_request(request):
 	return render (request=request, template_name="register.html", context={"register_form":form})
 
 def usersView(request):
-    users = User.objects.all()
+    if request.user.is_superuser:
+        users = NormalUser.objects.all()
+    else:
+        users=NormalUser.objects.filter(user=request.user)    
     context = {
         'users' : users
     }
     return render(request, 'users_view.html', context)   
 
 def userDelete(request, id):
-  user_object = User.objects.get(id=id)
+  user_object = NormalUser.objects.get(id=id)
   user_object.delete()
   return redirect("register_app:users")
 
@@ -93,15 +97,29 @@ def companyView(request):
     }
     return render(request, 'company_view.html', context)   
       
-
 def createNewUser(request):
-	if request.method == "POST":
-		form = NormalUserForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect("base_app:companyindex")
-	form = NormalUserForm()
-	return render (request=request, template_name="new_user.html", context={"form":form})
+    if request.method == 'POST':
+        form = NormalUserForm(request.POST)
+        context = {'form':form}
+        if form.is_valid():
+            obj= form.save(commit=False)
+            obj.user= request.user
+            obj.save()
+            created = True
+            form = NormalUserForm()
+            context = {
+                'created' : created,
+                'form' : form,
+                       }
+            return redirect("register_app:users")
+        else:
+            return render(request, 'new_user.html', context)
+    else:
+        form = NormalUserForm()
+        context = {
+            'form' : form,
+        }
+        return render (request=request, template_name="new_user.html", context={"form":form})
 
 def companyUpdateView(request, id):
     objects = Company.objects.get(id=id)

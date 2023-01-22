@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from register_app.models import NormalUser
 
 
 status = (
@@ -46,13 +47,14 @@ class Project(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=80)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assign = models.ForeignKey(User, on_delete=models.CASCADE)
+    assign = models.ForeignKey(NormalUser,null=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
     type = models.CharField(max_length=15, choices=task_type,default=1)
     expected_start_date = models.DateField()
     expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
+    user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     
 
     class Meta:

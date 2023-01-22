@@ -82,7 +82,9 @@ def newTask(request):
         form = TaskRegistrationForm(request.user,request.POST)
         context = {'form': form}
         if form.is_valid():
-            form.save()
+            obj=form.save(commit=False)
+            obj.user=request.user
+            obj.save()
             created = True
             context = {
                 'created': created,
@@ -97,7 +99,10 @@ def newTask(request):
         return render(request,'new_task.html', context)
 
 def taskView(request):
-    tasks = Task.objects.all()  
+    if request.user.is_superuser:
+        tasks = Task.objects.all()  
+    else:
+        tasks=Task.objects.filter(user=request.user) 
     context = {
         'tasks' : tasks,
     }

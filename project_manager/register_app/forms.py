@@ -59,7 +59,7 @@ class NormalUserForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
+        user = super(NormalUserForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.username = self.cleaned_data['username']
@@ -77,9 +77,6 @@ class NormalUserForm(forms.ModelForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
    
-
-
-
 class CompanyRegistrationForm(forms.ModelForm):
     name = forms.CharField(max_length=80)
     email = forms.EmailField()
