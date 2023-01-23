@@ -134,9 +134,8 @@ STATIC_URL = 'static/'
 
 import os
 
-MEDIA_URL = '/media/' # Included upload images
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'base_app/media') # Included upload images
-print(MEDIA_ROOT)
+MEDIA_URL = '/media/' # Included upload images
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

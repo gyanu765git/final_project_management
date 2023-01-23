@@ -106,20 +106,18 @@ class CompanyRegistrationForm(forms.ModelForm):
         self.fields['found_date'].widget.attrs['class'] = 'form-control'
        
 
-class ProfilePictureForm(forms.Form):
-    img = forms.ImageField()
+class ProfilePictureForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['img']
 
-    def save(self, request, commit=True):
-        user = request.user.userprofile_set.first()
-        user.img = self.cleaned_data['img']
+    def save(self,commit=True):
+        pro = super(ProfilePictureForm, self).save(commit=False)
+        pro.img = self.cleaned_data['img']
 
         if commit:
-            user.save()
-
-        return user
+            pro.save()
+        return pro
 
     def __init__(self, *args, **kwargs):
         super(ProfilePictureForm, self).__init__(*args, **kwargs)
