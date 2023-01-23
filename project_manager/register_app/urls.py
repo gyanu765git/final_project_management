@@ -15,5 +15,6 @@ urlpatterns = [
     path('company/delete/<int:id>/',views.companyDelete,name='company_delete'),
     path("profile/",views.renderprofile, name="profile"),
     path("new-user/",views.createNewUser, name="new_user"),
+    path('new-user/update/<int:id>',views.userUpdateView,name="user_update"),
     
 ]

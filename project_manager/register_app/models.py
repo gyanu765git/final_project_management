@@ -19,12 +19,11 @@ class Company(models.Model):
 class NormalUser(models.Model):
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
-    username=models.CharField(max_length=20)
     email=models.EmailField(max_length=25)
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.username
+        return self.first_name + " " + self.last_name
 
 
 class UserProfile(models.Model):

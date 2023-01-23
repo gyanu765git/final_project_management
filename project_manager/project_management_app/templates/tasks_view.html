@@ -36,7 +36,7 @@
                 <tbody>
                 {% for task in tasks %}
                 <tr>
-                    <td>{{task.task_name}}</td>
+                    <td>{{task.task_name|truncatechars:12}}</td>
                     <td>
                         {% if task.status == '1' %}
                         <p>Open</p>
@@ -60,11 +60,11 @@
                         <p>high</p>
                         {% endif %}
                     </td>
-                    <td>{{task.project}}</td>
+                    <td>{{task.project|truncatechars:20}}</td>
                     <td>{{task.assign}}</td>
                     <td>{{task.expected_start_date}}</td>
                     <td>{{task.expected_end_date}}</td>
-                    <td>{{task.description}}</td>
+                    <td>{{task.description|truncatechars:5}}</td>
                     <td><a href="{% url 'project_management_app:task_update' task.id %}">update</a></td>
                     <td><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></td>
                 </tr>

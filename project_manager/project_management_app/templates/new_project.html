@@ -14,7 +14,17 @@
 
 <!--Login--> 
 <div class="container-fluid py-5" style="background-color:white;">
-  <h1>create your project here</h1>
+  <div class="row">
+    <div class="col-4 text-left px-4">
+      
+    </div>
+    <div class="col-4">
+     <h1>create project here</h1>
+    </div>
+    <div class="col-4 text-right px-4">
+    <a class="btn btn-primary py-0" href="{% url 'project_management_app:project-type' %}" style="text-decoration:none;border-radius:15px;">create project type</a> 
+     </div>
+  </div>
   <form method="POST">
     <div class="row">
      {% csrf_token %}
@@ -25,7 +35,7 @@
      </div>
      {% endfor %} 
     </div>
-      <button class="btn btn-primary" type="submit">create</button>
+      <button class="btn btn-primary" type="submit" style="border-radius:5px;">create</button>
     
 
     </form>

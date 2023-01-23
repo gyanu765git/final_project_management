@@ -47,7 +47,6 @@ class NormalUserForm(forms.ModelForm):
     class Meta:
         model = NormalUser
         fields = [
-            'username',
             'first_name',
             'last_name',
             'email',
@@ -62,7 +61,6 @@ class NormalUserForm(forms.ModelForm):
         user = super(NormalUserForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
         
         if commit:
@@ -74,7 +72,6 @@ class NormalUserForm(forms.ModelForm):
         super(NormalUserForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
    
 class CompanyRegistrationForm(forms.ModelForm):

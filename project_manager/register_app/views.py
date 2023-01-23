@@ -21,21 +21,7 @@ def register_request(request):
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = RegistrationForm()
 	return render (request=request, template_name="register.html", context={"register_form":form})
-
-def usersView(request):
-    if request.user.is_superuser:
-        users = NormalUser.objects.all()
-    else:
-        users=NormalUser.objects.filter(user=request.user)    
-    context = {
-        'users' : users
-    }
-    return render(request, 'users_view.html', context)   
-
-def userDelete(request, id):
-  user_object = NormalUser.objects.get(id=id)
-  user_object.delete()
-  return redirect("register_app:users")
+  
 
 
 def login_request(request):
@@ -87,6 +73,22 @@ def newCompany(request):
         }
         return render(request, 'new_company.html', context)
 
+def companyUpdateView(request, id):
+    objects = Company.objects.get(id=id)
+    if request.method == 'POST':
+        form = CompanyRegistrationForm(request.POST, instance=objects)
+        if form.is_valid():
+            form.save()
+            return redirect("register_app:company")
+    else:
+        form = CompanyRegistrationForm(instance=objects)
+    return render(request,"company_update.html",{'form': form,"objects":objects})      
+	
+def companyDelete(request, id):
+  project_object = Company.objects.get(id=id)
+  project_object.delete()
+  return redirect("register_app:company")
+
 def companyView(request):
     if request.user.is_superuser:
         companies = Company.objects.all()
@@ -121,22 +123,32 @@ def createNewUser(request):
         }
         return render (request=request, template_name="new_user.html", context={"form":form})
 
-def companyUpdateView(request, id):
-    objects = Company.objects.get(id=id)
+def userDelete(request, id):
+  user_object = NormalUser.objects.get(id=id)
+  user_object.delete()
+  return redirect("register_app:users")
+
+def userUpdateView(request, id):
+    objects = NormalUser.objects.get(id=id)
     if request.method == 'POST':
-        form = CompanyRegistrationForm(request.POST, instance=objects)
+        form = NormalUserForm(request.POST, instance=objects)
         if form.is_valid():
             form.save()
-            return redirect("register_app:company")
+            return redirect("register_app:users")
     else:
-        form = CompanyRegistrationForm(instance=objects)
-    return render(request,"company_update.html",{'form': form,"objects":objects})      
-	
-def companyDelete(request, id):
-  project_object = Company.objects.get(id=id)
-  project_object.delete()
-  return redirect("register_app:company")
+        form = NormalUserForm(instance=objects)
+    return render(request,"user_update.html",{'form': form,"objects":objects})   
 
+def usersView(request):
+    if request.user.is_superuser:
+        users = NormalUser.objects.all()
+    else:
+        users=NormalUser.objects.filter(user=request.user)    
+    context = {
+        'users' : users
+    }
+    return render(request, 'users_view.html', context)        
+	
 
 def profile(request):
     if request.method == 'POST':
