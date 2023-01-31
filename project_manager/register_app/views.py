@@ -5,10 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from .forms import CompanyRegistrationForm
 from .models import Company
-from .forms import ProfilePictureForm,NormalUserForm
+from .forms import ProfilePictureForm
 from django.contrib.auth.models import User
-from register_app.models import NormalUser
-
 
 def register_request(request):
 	if request.method == "POST":
@@ -47,6 +45,34 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("base_app:home")
+
+
+def userDelete(request, id):
+  user_object = User.objects.get(id=id)
+  user_object.delete()
+  return redirect("register_app:users")
+
+def userUpdateView(request, id):
+    objects = User.objects.get(id=id)
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST, instance=objects)
+        if form.is_valid():
+            form.save()
+            return redirect("register_app:users")
+    else:
+        form = RegistrationForm(instance=objects)
+    return render(request,"user_update.html",{'form': form,"objects":objects})   
+
+def usersView(request):
+    if request.user.is_superuser:
+        users = User.objects.all()
+    else:
+        users=User.objects.filter(user=request.user)    
+    context = {
+        'users' : users
+    }
+    return render(request, 'users_view.html', context)        
+	    
 
 
 def newCompany(request):
@@ -98,57 +124,7 @@ def companyView(request):
         'companies' : companies,
     }
     return render(request, 'company_view.html', context)   
-      
-def createNewUser(request):
-    if request.method == 'POST':
-        form = NormalUserForm(request.POST)
-        context = {'form':form}
-        if form.is_valid():
-            obj= form.save(commit=False)
-            obj.user= request.user
-            obj.save()
-            created = True
-            form = NormalUserForm()
-            context = {
-                'created' : created,
-                'form' : form,
-                       }
-            return redirect("register_app:users")
-        else:
-            return render(request, 'new_user.html', context)
-    else:
-        form = NormalUserForm()
-        context = {
-            'form' : form,
-        }
-        return render (request=request, template_name="new_user.html", context={"form":form})
-
-def userDelete(request, id):
-  user_object = NormalUser.objects.get(id=id)
-  user_object.delete()
-  return redirect("register_app:users")
-
-def userUpdateView(request, id):
-    objects = NormalUser.objects.get(id=id)
-    if request.method == 'POST':
-        form = NormalUserForm(request.POST, instance=objects)
-        if form.is_valid():
-            form.save()
-            return redirect("register_app:users")
-    else:
-        form = NormalUserForm(instance=objects)
-    return render(request,"user_update.html",{'form': form,"objects":objects})   
-
-def usersView(request):
-    if request.user.is_superuser:
-        users = NormalUser.objects.all()
-    else:
-        users=NormalUser.objects.filter(user=request.user)    
-    context = {
-        'users' : users
-    }
-    return render(request, 'users_view.html', context)        
-	
+      	
 
 def profile(request):
     if request.method == 'POST':

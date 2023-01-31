@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from register_app.models import Company 
-from register_app.models import UserProfile,NormalUser
+from register_app.models import UserProfile
 
 # Create your forms here.
 
@@ -43,37 +43,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['password2'].help_text = None
       
 
-class NormalUserForm(forms.ModelForm):
-    class Meta:
-        model = NormalUser
-        fields = [
-            'first_name',
-            'last_name',
-            'email',
-        ]
 
-        labels = {
-            'first_name': 'Frist Name',
-            'last_name': 'Last Name',
-        }
-
-    def save(self, commit=True):
-        user = super(NormalUserForm, self).save(commit=False)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        
-        if commit:
-            user.save()
-        return user
-
-    
-    def __init__(self, *args, **kwargs):
-        super(NormalUserForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs['class'] = 'form-control'
-        self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-   
 class CompanyRegistrationForm(forms.ModelForm):
     name = forms.CharField(max_length=80)
     email = forms.EmailField()

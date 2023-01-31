@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from register_app.models import NormalUser
 
 
 status = (
@@ -24,7 +23,6 @@ task_type=(
 )
 class ProjectType(models.Model):
     type=models.CharField(max_length=100)
-    user = models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     
     def __str__(self):
         return(self.type)
@@ -32,14 +30,14 @@ class ProjectType(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=80)
     project_type = models.ForeignKey(ProjectType, on_delete=models.CASCADE)
+    assign = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
     is_active = models.CharField(max_length=17, choices=active_status, default=1)
     expected_start_date = models.DateField()
     expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-
+   
     def __str__(self):
         return (self.name)
 
@@ -47,14 +45,14 @@ class Project(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=80)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assign = models.ForeignKey(NormalUser,null=True, on_delete=models.CASCADE)
+    assign = models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=15, choices=status, default=1)
     type = models.CharField(max_length=15, choices=task_type,default=1)
     expected_start_date = models.DateField()
     expected_end_date=models.DateField()
     priority=models.CharField(max_length=15, choices=priority_status, default=1)
     description = models.TextField(blank=True)
-    user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    # user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     
 
     class Meta:

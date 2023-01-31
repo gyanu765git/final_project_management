@@ -1,7 +1,6 @@
 from django import forms
 from .models import Project,Task,ProjectType
 from django.contrib.auth.models import User
-from register_app.models import NormalUser
 
 
 # status = (
@@ -42,6 +41,7 @@ class ProjectRegistrationForm(forms.ModelForm):
         model = Project
         fields = ["name",
                   "project_type",
+                  "assign",
                   "status",
                   "is_active",
                   "expected_start_date",
@@ -55,6 +55,7 @@ class ProjectRegistrationForm(forms.ModelForm):
         Project = super(ProjectRegistrationForm, self).save(commit=False)
         Project.name = self.cleaned_data['name']
         Project.project_type=self.cleaned_data["project_type"]
+        Project.assign=self.cleaned_data["assign"]
         Project.status = self.cleaned_data['status']
         Project.is_active = self.cleaned_data['is_active']
         Project.expected_start_date = self.cleaned_data['expected_start_date']
@@ -68,11 +69,12 @@ class ProjectRegistrationForm(forms.ModelForm):
         return Project
 
 
-    def __init__(self,user,*args, **kwargs):
+    def __init__(self,*args, **kwargs):
         super(ProjectRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['name'].widget.attrs['placeholder'] = 'Project Name'  
         self.fields["project_type"].widget.attrs['class']='form-control'
+        self.fields["assign"].widget.attrs['class']='form-control'
         self.fields['status'].widget.attrs['class'] = 'form-control'
         self.fields['is_active'].widget.attrs['class'] = 'form-control'
         self.fields['expected_start_date'].widget.attrs['class'] = 'form-control'
@@ -80,7 +82,6 @@ class ProjectRegistrationForm(forms.ModelForm):
         self.fields['priority'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'project description...'
-        self.fields["project_type"].queryset = ProjectType.objects.filter(user=user)
 
    
 
@@ -148,7 +149,7 @@ class TaskRegistrationForm(forms.ModelForm):
         return task
 
 
-    def __init__(self,user, *args, **kwargs):
+    def __init__(self,*args, **kwargs):
         super(TaskRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['task_name'].widget.attrs['class'] = 'form-control'
         self.fields['task_name'].widget.attrs['placeholder'] = 'task name'
@@ -162,8 +163,6 @@ class TaskRegistrationForm(forms.ModelForm):
         self.fields['priority'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['placeholder'] = 'task description..'
-        self.fields["project"].queryset = Project.objects.filter(user=user)
-        self.fields["assign"].queryset=NormalUser.objects.filter(user=user)
 
     
         

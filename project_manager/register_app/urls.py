@@ -14,7 +14,6 @@ urlpatterns = [
     path('company/update/<int:id>',views.companyUpdateView,name="company_update"),
     path('company/delete/<int:id>/',views.companyDelete,name='company_delete'),
     path("profile/",views.profile, name="profile"),
-    path("new-user/",views.createNewUser, name="new_user"),
     path('new-user/update/<int:id>',views.userUpdateView,name="user_update"),
     
 ]

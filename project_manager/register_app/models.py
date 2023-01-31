@@ -16,15 +16,6 @@ class Company(models.Model):
     def __str__(self):
         return (self.name)
 
-class NormalUser(models.Model):
-    first_name=models.CharField(max_length=20)
-    last_name=models.CharField(max_length=20)
-    email=models.EmailField(max_length=25)
-    user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.first_name + " " + self.last_name
-
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE,related_name="UserProfile")

@@ -1,17 +1,15 @@
 from django.shortcuts import render,redirect
 from project_management_app.forms import ProjectRegistrationForm,TaskRegistrationForm,ProjectTypeForm
 from .models import Project,Task
-from django.contrib.auth.models import User
+
 # Create your views here.
 
 def newProject(request):
     if request.method == 'POST':
-        form = ProjectRegistrationForm(request.user,request.POST)
+        form = ProjectRegistrationForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            obj=form.save(commit=False)
-            obj.user=request.user
-            obj.save()
+            form.save()
             created = True
             context = {
                 'created': created,
@@ -21,7 +19,7 @@ def newProject(request):
         else:
             return render(request, 'new_project.html', context)
     else:
-        form = ProjectRegistrationForm(request.user)
+        form = ProjectRegistrationForm()
         context = {
             'form': form,
         }
@@ -41,12 +39,12 @@ def projectUpdateView(request, id):
     objects = Project.objects.get(id=id)
     tasks=Task.objects.filter(project_id=id)
     if request.method == 'POST':
-        form = ProjectRegistrationForm(request.user,request.POST, instance=objects)
+        form = ProjectRegistrationForm(request.POST, instance=objects)
         if form.is_valid():
             form.save()
             return redirect("project_management_app:projects")
     else:
-        form = ProjectRegistrationForm(request.user,instance=objects)
+        form = ProjectRegistrationForm(instance=objects)
     return render(request,"project_update.html",{'form': form,"objects":objects,"tasks":tasks})
 
 def projectDelete(request, id):
@@ -59,9 +57,7 @@ def ProjectTypeView(request):
         form = ProjectTypeForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            obj=form.save(commit=False)
-            obj.user=request.user
-            obj.save()
+            form.save()
             created = True
             context = {
                 'created': created,
@@ -79,12 +75,10 @@ def ProjectTypeView(request):
 
 def newTask(request):
     if request.method == 'POST':
-        form = TaskRegistrationForm(request.user,request.POST)
+        form = TaskRegistrationForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            obj=form.save(commit=False)
-            obj.user=request.user
-            obj.save()
+            form.save()
             created = True
             context = {
                 'created': created,
@@ -92,7 +86,7 @@ def newTask(request):
             }
             return redirect("project_management_app:tasks")
     else:
-        form = TaskRegistrationForm(request.user)
+        form = TaskRegistrationForm()
         context = {
             'form': form,
         }
@@ -111,12 +105,12 @@ def taskView(request):
 def taskUpdateView(request, id):
     objects = Task.objects.get(id=id)
     if request.method == 'POST':
-        form = TaskRegistrationForm(request.user,request.POST, instance=objects)
+        form = TaskRegistrationForm(request.POST, instance=objects)
         if form.is_valid():
             form.save()
             return redirect("project_management_app:tasks")
     else:
-        form = TaskRegistrationForm(request.user,instance=objects)
+        form = TaskRegistrationForm(instance=objects)
 
     return render(request,"task_update.html",{'form': form ,"objects":objects})    
 
