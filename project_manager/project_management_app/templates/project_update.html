@@ -13,13 +13,17 @@
 <div class="container py-5" style="background-color:white;">
   <div class="row">
     <div class="col-4 text-left px-4">
+      {% if user.is_superuser%}
       <a href="{% url 'project_management_app:project_delete' objects.id %}" style='color:red;'>delete project</a>
+      {%endif%}
     </div>
     <div class="col-4">
   <h3>{{objects.name}}</h3>
     </div>
   <div class="col-4 text-right px-4">
+    {% if user.is_superuser%}
     <a href="{% url 'project_management_app:new-task' %}">Add Task ({{tasks.count}})</a> 
+    {%endif%}
   </div>
   </div>
   <form method="POST">
@@ -77,14 +81,18 @@
           <td>{{task.expected_start_date}}</td>
           <td>{{task.expected_end_date}}</td>
           <td>{{task.description}}</td>
+          {% if user.is_superuser%}
           <td><a href="{% url 'project_management_app:task_update' task.id %}">update</a></td>
           <td><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></td>
+          {% endif%}
       </tr>
       {% endfor %}
       </tbody>
   </table>
 </div>
+{% if user.is_superuser%}
     <button class="btn btn-primary" type="submit">update</button>
+    {%endif%}
 
   </form>
 

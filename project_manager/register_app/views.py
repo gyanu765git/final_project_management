@@ -4,7 +4,7 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from .forms import CompanyRegistrationForm
-from .models import Company
+from .models import Company,UserProfile
 from .forms import ProfilePictureForm
 from django.contrib.auth.models import User
 
@@ -19,8 +19,8 @@ def register_request(request):
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = RegistrationForm()
 	return render (request=request, template_name="register.html", context={"register_form":form})
-  
 
+  
 
 def login_request(request):
 	if request.method == "POST":
@@ -127,9 +127,9 @@ def companyView(request):
       	
 
 def profile(request):
+    profile=UserProfile.objects.get(id=request.user.id)
     if request.method == 'POST':
         img_form = ProfilePictureForm(request.POST, request.FILES)
-        print('PRINT 1: ', img_form)
         context = {'img_form' : img_form }
         if img_form.is_valid():
             img_form.save(request)
@@ -140,8 +140,6 @@ def profile(request):
             return render(request, 'profile.html', context)
     else:
         img_form = ProfilePictureForm()
-        context = {'img_form' : img_form }
+        context = {'img_form' : img_form,'profile':profile}
         return render(request, 'profile.html', context)
 
-def renderprofile(request):
-    return render(request,"profile.html")

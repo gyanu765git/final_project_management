@@ -38,7 +38,7 @@
 
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
-        <a class="nav-link" href={% url 'base_app:index' %}>Home</a>
+        <a class="nav-link" href="{% url 'base_app:index' %}">Home</a>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -73,7 +73,7 @@
 
           <a class="dropdown-item" href="{% url 'register_app:logout' %}"><i class="fa fa-lock"></i> Logout</a>
           {% else %}
-          <a class="dropdown-item" href={% url 'register_app:login' %}><i class="fa fa-user"></i> Login</a>
+          <a class="dropdown-item" href="{% url 'register_app:login' %}"><i class="fa fa-user"></i> Login</a>
           {% endif %}
         </div>
       </li>
@@ -91,34 +91,39 @@
     <div class="sidebar"> 
       <nav class="sidebar-nav">
         <ul class="nav">
+
           <li class="nav-item">
-            <a class="nav-link" href={% url 'base_app:index' %}><i class="fa fa-home"></i> Home</a>
+            <a class="nav-link" href="{% url 'base_app:index' %}"><i class="fa fa-home"></i> Home</a>
           </li>
+         
           <li class="nav-item">
-            <a class="nav-link" href={% url 'base_app:dashboard' %}><i class="fa fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="{% url 'base_app:dashboard' %}"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
           </li>
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i> Views</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href={% url 'project_management_app:projects' %}><i class="fa fa-paper-plane ml-2"></i> Project's View</a>
+                <a class="nav-link" href="{% url 'project_management_app:projects' %}"><i class="fa fa-paper-plane ml-2"></i> Project's View</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'project_management_app:tasks' %}"><i class="fa fa-user ml-2"></i> Tasks Views</a>
               </li>
+              {% if user.is_superuser%}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'register_app:users' %}"><i class="fa fa-user ml-2"></i> Users Views</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'register_app:company'%}"><i class="fa fa-building ml-2"></i> Company Views</a>
               </li>
+              {%endif%}
             </ul>
           </li>
+          {% if user.is_superuser%}
           {% comment %} <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-industry"></i> Company</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href={% url 'register_app:new-company' %}><i class="fa fa-plus ml-2"></i> New Company</a>
+                <a class="nav-link" href="{% url 'register_app:new-company' %}"><i class="fa fa-plus ml-2"></i> New Company</a>
               </li>
             </ul>
           </li> {% endcomment %}
@@ -126,28 +131,28 @@
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href={% url 'project_management_app:new-project' %}><i class="fa fa-plus ml-2"></i> New Project</a>
+                <a class="nav-link" href="{% url 'project_management_app:new-project' %}"><i class="fa fa-plus ml-2"></i> New Project</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href={% url 'project_management_app:new-task' %}><i class="fa fa-plus ml-2"></i> New Task</a>
+                <a class="nav-link" href="{% url 'project_management_app:new-task' %}"><i class="fa fa-plus ml-2"></i> New Task</a>
               </li>
               {% comment %} <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> Project Template</a>
               </li> {% endcomment %}
               <li class="nav-item">
-                <a class="nav-link" href={% url 'project_management_app:project-type' %}><i class="fa fa-plus ml-2"></i> Project Type</a>
+                <a class="nav-link" href="{% url 'project_management_app:project-type' %}"><i class="fa fa-plus ml-2"></i> Project Type</a>
               </li>
             </ul>
           </li>
-          <li class="nav-item nav-dropdown">
+          <!-- <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-user"></i> Users</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href={% url 'register_app:register' %}><i class="fa fa-user-plus ml-2"></i> Create New User</a>
+                <a class="nav-link" href="{% url 'register_app:register' %}"><i class="fa fa-user-plus ml-2"></i> Create New User</a>
               </li>
-              
+              {%endif%}
             </ul>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -186,6 +191,7 @@
     <script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
     <script src="{% static 'vendors/js/pace.min.js'%}"></script>
     <script src="{% static 'vendors/js/Chart.min.js'%}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- CoreUI main scripts -->

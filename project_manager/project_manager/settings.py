@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,7 +135,7 @@ STATIC_URL = 'static/'
 
 import os
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'base_app/media') # Included upload images
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') # Included upload images
 MEDIA_URL = '/media/' # Included upload images
 
 # Default primary key field type
@@ -180,3 +181,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     'django.contrib.auth.backends.ModelBackend',
 #     'django_auth_ldap.backend.LDAPBackend',
 # )
+
+#admin config
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Project Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Project Admin",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Project Administration",
+
+    # Copyright on the footer
+    "copyright": "Taashee Linux Services Pvt. Ltd.",
+     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": "img/logos/taashee.png",
+
+     # Welcome text on the login screen
+    "welcome_sign": "Welcome to the Project Admin",
+
+     # Logo to use for your site, must be present in static files, used for brand on top left
+    "site_logo": "img/logos/title.png",
+
+    #   # Logo to use for your site, must be present in static files, used for brand on top left
+    # "site_logo": "img/logos/taashee.png",
+
+
+    
+
+}

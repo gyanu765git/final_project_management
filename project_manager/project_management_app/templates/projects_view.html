@@ -15,8 +15,10 @@
             <strong>{{ projects.count }} Active Projects</strong>
             </div>
             <div class="col-4 text-right">
+                {% if user.is_superuser%}
             <a class="btn btn-primary py-0" href="{% url 'project_management_app:new-project'%}" style="text-decoration:none;border-radius:15px;">New Project</a>
-            </div>
+                {%endif%}
+           </div>
         </div>
         <div class="card-body mx-0 px-0">
             <div class="row">

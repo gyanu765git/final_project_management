@@ -15,7 +15,9 @@
             <strong>{{ tasks.count }} Tasks</strong>
             </div>
             <div class="col-4 text-right">
+                {% if user.is_superuser%}
             <a class="btn btn-primary py-0" href="{% url 'project_management_app:new-task'%}" style="text-decoration:none;border-radius:15px;">New Task</a>
+            {%endif%}
             </div>
         </div>
         <div class="container-fluid">
@@ -65,8 +67,11 @@
                     <td>{{task.expected_start_date}}</td>
                     <td>{{task.expected_end_date}}</td>
                     <td>{{task.description|truncatechars:5}}</td>
+                    {% if user.is_superuser%}
                     <td><a href="{% url 'project_management_app:task_update' task.id %}">update</a></td>
+                   
                     <td><a href="{% url 'project_management_app:task_delete' task.id %}" style='color:red;'>delete</a></td>
+                    {%endif%}
                 </tr>
                 {% endfor %}
                 </tbody>

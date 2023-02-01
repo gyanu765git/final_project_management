@@ -23,10 +23,12 @@
                                   </div>
                                   <div class="col-4"> 
                                    <a  href="{% url 'base_app:index' %}"> <img src="{% static 'img/project.webp' %}" style="height:200px;"></a>
-                                    <p class="lead">
+                                   {% if user.is_superuser%}
+                                   <p class="lead">
                                       <a style="border-radius:5px;" class="btn btn-primary btn-lg" href="{% url 'project_management_app:new-project' %}" role="button">Create your project</a>
                                     </p>
-                                  </div>  
+                                    {%endif%} 
+                                </div>  
                                   <div class="col-4">
                                   </div>  
                               </div>

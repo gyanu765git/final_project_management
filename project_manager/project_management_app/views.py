@@ -20,6 +20,7 @@ def newProject(request):
             return render(request, 'new_project.html', context)
     else:
         form = ProjectRegistrationForm()
+
         context = {
             'form': form,
         }
@@ -29,7 +30,7 @@ def projectsView(request):
     if request.user.is_superuser:
         projects=Project.objects.all()
     else:    
-        projects = Project.objects.filter(user=request.user)
+        projects = Project.objects.filter(assign=request.user)
     context = {
         'projects' : projects,
     }
@@ -96,7 +97,7 @@ def taskView(request):
     if request.user.is_superuser:
         tasks = Task.objects.all()  
     else:
-        tasks=Task.objects.filter(user=request.user) 
+        tasks=Task.objects.filter(assign=request.user) 
     context = {
         'tasks' : tasks,
     }

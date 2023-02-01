@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE,related_name="UserProfile")
     # company = models.ForeignKey(Company, on_delete=models.CASCADE)
     # project = models.ManyToManyField(Project, blank=True)
-    img    = models.ImageField(upload_to='profile', blank=True, default='base_app/static/img/avatar/blank_profile.png')
+    img    = models.ImageField(upload_to='profile')
 
     def __str__(self):
         return (str(self.user))
