@@ -128,13 +128,10 @@ def companyView(request):
 def profile(request):
 	customer = request.user.userprofile
 	form = ProfilePictureForm(instance=customer)
-
 	if request.method == 'POST':
 		form = ProfilePictureForm(request.POST, request.FILES,instance=customer)
 		if form.is_valid():
 			form.save()
-
-
 	context = {'form':form}
 	return render(request, 'profile.html', context)
 
