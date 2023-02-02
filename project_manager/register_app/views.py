@@ -125,8 +125,21 @@ def companyView(request):
     }
     return render(request, 'company_view.html', context)   
       	
-
-
 def profile(request):
-    return render(request,"profile.html")
+	customer = request.user.userprofile
+	form = ProfilePictureForm(instance=customer)
+
+	if request.method == 'POST':
+		form = ProfilePictureForm(request.POST, request.FILES,instance=customer)
+		if form.is_valid():
+			form.save()
+
+
+	context = {'form':form}
+	return render(request, 'profile.html', context)
+
+
+
+
+
    

@@ -19,7 +19,7 @@ class Company(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
-    img    = models.ImageField(default="blank_profile",blank=True,null=True)
+    img    = models.ImageField(default="blank_profile.png",blank=True,null=True)
 
     def __str__(self):
         return (str(self.user))
