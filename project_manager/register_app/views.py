@@ -127,9 +127,10 @@ def companyView(request):
       	
 
 def profile(request):
-    profile=UserProfile.objects.get(id=request.user.id)
+    profile=UserProfile.objects.get(user=request.user.id)
     if request.method == 'POST':
         img_form = ProfilePictureForm(request.POST, request.FILES)
+        print('PRINT 1: ', img_form)
         context = {'img_form' : img_form }
         if img_form.is_valid():
             img_form.save(request)
@@ -140,6 +141,5 @@ def profile(request):
             return render(request, 'profile.html', context)
     else:
         img_form = ProfilePictureForm()
-        context = {'img_form' : img_form,'profile':profile}
+        context = {'img_form' : img_form, 'profile':profile }
         return render(request, 'profile.html', context)
-

@@ -52,7 +52,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           {% if user.is_authenticated %}
-          <img src="{% static 'img/avatar/blank_profile.png' %}" class="img-avatar" alt="{{ user }}">
+          <img src="{{profile.img.url}}" class="img-avatar" alt="{{ user }}">
           {% else %}
           <img src="{% static 'img/avatar/blank_profile.png' %}" class="img-avatar" alt="{{ user }}">
           {% endif %}

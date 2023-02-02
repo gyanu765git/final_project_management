@@ -52,7 +52,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           {% if user.is_authenticated %}
-          <img src="{% static 'img/avatar/blank_profile.png' %}" class="img-avatar" alt="{{ user }}">
+          <img src="{{profile.img.url}}" class="img-avatar" alt="{{ user }}">
           {% else %}
           <img src="{% static 'img/avatar/blank_profile.png' %}" class="img-avatar" alt="{{ user }}">
           {% endif %}
@@ -194,7 +194,6 @@
     <script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
     <script src="{% static 'vendors/js/pace.min.js'%}"></script>
     <script src="{% static 'vendors/js/Chart.min.js'%}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- CoreUI main scripts -->

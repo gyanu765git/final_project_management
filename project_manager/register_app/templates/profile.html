@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 
 {% block breadcrumb %}
@@ -15,12 +15,12 @@
                     <div class="social-box" style="height:110%">
                         <div class="card">
                             <div class="card-body">
-                                <img src="{{ user.profile.img.url }}" class="img-avatar m-4" alt="{{ user }}" width="20%">
+                                <img src="{{ profile.img.url }}" class="img-avatar m-4" alt="{{ user }}" width="20%">
                                 <br>
                                 <form action="" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <div class="custom-file col-md-4">
-                                        {{ img_form.img }}
+                                        {{ img_form }}
                                         <label class="custom-file-label btn-sm" for="validatedCustomFile">Update picture...</label>
                                         <div>
                                             <button class="btn btn-primary btn-sm my-2" type="submit">Upload</button>
