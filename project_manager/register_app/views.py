@@ -126,20 +126,7 @@ def companyView(request):
     return render(request, 'company_view.html', context)   
       	
 
+
 def profile(request):
-    profile=UserProfile.objects.get(user=request.user.id)
-    if request.method == 'POST':
-        img_form = ProfilePictureForm(request.POST, request.FILES)
-        print('PRINT 1: ', img_form)
-        context = {'img_form' : img_form }
-        if img_form.is_valid():
-            img_form.save(request)
-            updated = True
-            context = {'img_form' : img_form, 'updated' : updated }
-            return render(request, 'profile.html', context)
-        else:
-            return render(request, 'profile.html', context)
-    else:
-        img_form = ProfilePictureForm()
-        context = {'img_form' : img_form, 'profile':profile }
-        return render(request, 'profile.html', context)
+    return render(request,"profile.html")
+   

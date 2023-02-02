@@ -132,10 +132,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "base_app/static",
+]
 
 import os
-
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') # Included upload images
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'base_app/static/profile') # Included upload images
 MEDIA_URL = '/media/' # Included upload images
 
 # Default primary key field type

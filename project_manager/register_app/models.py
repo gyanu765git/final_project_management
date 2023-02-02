@@ -18,10 +18,8 @@ class Company(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    # company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    # project = models.ManyToManyField(Project, blank=True)
-    img    = models.ImageField(upload_to='profile')
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    img    = models.ImageField(default="blank_profile",blank=True,null=True)
 
     def __str__(self):
         return (str(self.user))
