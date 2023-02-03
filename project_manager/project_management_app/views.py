@@ -29,10 +29,16 @@ def newProject(request):
 def projectsView(request):
     if request.user.is_superuser:
         projects=Project.objects.all()
+        completed=Project.objects.filter(status=2)
+        open=Project.objects.filter(status=1)
+        cancelled=Project.objects.filter(status=3)
     else:    
         projects = Project.objects.filter(assign=request.user)
     context = {
         'projects' : projects,
+        'open':open,
+        'completed':completed,
+        'cancelled':cancelled,
     }
     return render(request, 'projects_view.html', context)
 
