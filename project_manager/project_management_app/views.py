@@ -102,10 +102,16 @@ def newTask(request):
 def taskView(request):
     if request.user.is_superuser:
         tasks = Task.objects.all()  
+        open=Task.objects.filter(status=1)
+        completed=Task.objects.filter(status=2)
+        cancelled=Task.objects.filter(status=3)
     else:
         tasks=Task.objects.filter(assign=request.user) 
     context = {
         'tasks' : tasks,
+        'open':open,
+        'completed':completed,
+        'cancelled':cancelled,
     }
     return render(request, 'tasks_view.html', context)        
 

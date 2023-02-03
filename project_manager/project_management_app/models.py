@@ -7,6 +7,7 @@ status = (
     ('2', 'Completed'),
     ('3', 'Cancelled'),
 )
+
 active_status = (
     ('1', 'Yes'),
     ('2', 'No'),

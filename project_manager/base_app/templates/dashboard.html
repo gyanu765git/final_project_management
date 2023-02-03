@@ -72,8 +72,8 @@
   <!--/.row-->
 </div>
 {%if user.is_superuser%}
-<div class="container" style="width:600px;">
-<canvas id="chart" width="500" height="500"></canvas>
+<div class="container my-5" style="width:800px;">
+<canvas id="chart" width="500" height="300"></canvas>
 </div>
 {%endif%}
 </div>
@@ -90,25 +90,32 @@
 let ctx = document.getElementById("chart").getContext("2d");
 
 let chart = new Chart(ctx, {
-  type: "pie",
+  type: "line",
   data: {
-     labels: ["projects","tasks","registered companies","registered users"],
+     labels: ["projects {{projects.count}}","tasks {{tasks.count}}","registered companies {{companies.count}}","registered users {{users.count}}"],
      datasets: [
         {
-          label: "project management",
+          // label:"project management",
           backgroundColor: [
-            'red',"blue","orange","green"
+            'yellow',
           ],
-          borderColor: "#417690",
+          borderColor: "black",
           data: [{{projects.count}},{{tasks.count}},{{companies.count}},{{users.count}}]
         }
      ]
   },
-  options: {
-     title: {
-        display: true
-     }
-  }
+ options: {
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
 });
 </script>
 
