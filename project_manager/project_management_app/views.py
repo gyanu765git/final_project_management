@@ -91,7 +91,9 @@ def newTask(request):
                 'created': created,
                 'form': form,
             }
-            return redirect("project_management_app:tasks")
+            project_id = form.cleaned_data['project'].id
+            return redirect('project_management_app:project_update', id=project_id)
+            # return redirect("project_management_app:tasks")
     else:
         form = TaskRegistrationForm()
         context = {
